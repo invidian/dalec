@@ -24,7 +24,10 @@ func (c *Config) BuildContainer(ctx context.Context, client gwclient.Client, sOp
 		baseImg = bi.ToState(sOpt, opts...)
 	}
 
-	repos := dalec.GetExtraRepos(c.ExtraRepos, "install")
+	// Those base repos come from distro configuration. I don't think this is testable.
+	repos := dalec.GetExtraRepos(c.ExtraRepos, "foo")
+
+	// These are user specified via spec.
 	repos = append(repos, spec.GetInstallRepos(targetKey)...)
 
 	withRepos := c.RepoMounts(repos, sOpt, opts...)
